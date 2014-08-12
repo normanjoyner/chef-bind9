@@ -1,6 +1,6 @@
 node.default['bind9'] = {}
 node.default['bind9']['base_dir'] = "/etc/bind"
-node.default['bind9']['search'] = "role:dns_server AND placement_availability_zone:#{node['ec2']['placement_availability_zone'][0...-1]}*"
+node.default['bind9']['search'] = "role:bind9_server"
 node.default['bind9']['options'] = {}
 node.default['bind9']['options']['forwarders'] = ["8.8.8.8", "8.8.4.4"]
 node.default['bind9']['options']['allow_recursion'] = "10.0.0.0/8"
