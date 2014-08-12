@@ -1,0 +1,19 @@
+;
+; BIND data file for <%= @zone['name'] %>
+;
+$TTL    <%= @zone['ttl'] %>
+@       IN      SOA     <%= node['fqdn'] %>. root.localhost. (
+                         <%= @zone['serial'] %>                 ; Serial
+                         <%= @zone['refresh'] %>                ; Refresh
+                         <%= @zone['retry'] %>                  ; Retry
+                         <%= @zone['expire'] %>                 ; Expire
+                         <%= @zone['negative_cache_ttl'] %> )   ; Negative Cache TTL
+;
+<% @dns_servers.each do |dns_server| -%>
+        IN      NS      <%= dns_server['fqdn'] %>.
+<% end -%>
+
+; records
+<% @zone['records'].each do |record| -%>
+<%= record['name'] %>    IN    <%= record['type'] %>    <%= record['address'] %><% if record['type'] == "CNAME" -%>.<% end -%>
+<% end -%>
