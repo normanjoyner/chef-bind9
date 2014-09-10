@@ -15,5 +15,8 @@ $TTL    <%= @zone['ttl'] %>
 
 ; records
 <% @zone['records'].each do |record| -%>
-<%= record['name'] %>    IN    <%= record['type'] %>    <%= record['address'] %><% if record['type'] == "CNAME" -%>.<% end -%>
+<% record['address'] = [ record['address'] ] if record['address'].class == String -%>
+<% record['address'].each do |address| -%>
+<%= record['name'] %>    IN    <%= record['type'] %>    <%= address %><% if record['type'] == "CNAME" -%>.<% end -%>
+<% end -%>
 <% end -%>
