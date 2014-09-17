@@ -13,7 +13,9 @@ action :create do
     }
 
     # update node attributes
-    node.automatic['bind9']['zones'][new_resource.name] = attributes
+    node.normal['bind9']['zones'] = {} if node.normal['bind9']['zones'].nil?
+    node.normal['bind9']['zones'][new_resource.name] = attributes
+    node.save unless Chef::Config[:solo]
 
     # write zone file
     template "#{node['bind9']['base_dir']}/#{new_resource.name}" do
@@ -52,11 +54,11 @@ end
 action :remove do
 
     # update node attributes
-    node.automatic['bind9']['zones'].delete(new_resource.name)
+    node.normal['bind9']['zones'].delete(new_resource.name)
 
     # remove zone file
     file "#{node['bind9']['base_dir']}/#{new_resource.name}" do
-        action :remove
+        action :delete
     end
 
     # write named.conf.local file

@@ -1,4 +1,3 @@
-node.default['bind9'] = {}
 node.default['bind9']['base_dir'] = "/etc/bind"
 node.default['bind9']['search'] = "role:bind9_server"
 node.default['bind9']['options'] = {}
