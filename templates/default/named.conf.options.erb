@@ -21,9 +21,9 @@ options {
         // you will need to update your keys.  See https://www.isc.org/bind-keys
         //========================================================================
         dnssec-validation auto;
-        allow-recursion { <%= node['bind9']['options']['allow_recursion'] %>; };
-        allow-query     { <%= node['bind9']['options']['allow_query'] %>; };
-        allow-query-cache { <%= node['bind9']['options']['allow_query_cache'] %>; };
+        allow-recursion { <% node['bind9']['options']['allow_recursion'].each do |address| %> <%= address %>; <% end -%> };
+        allow-query     { <% node['bind9']['options']['allow_query'].each do |address| %> <%= address %>; <% end -%> };
+        allow-query-cache { <% node['bind9']['options']['allow_query_cache'].each do |address| %> <%= address %>; <% end -%> };
 
         auth-nxdomain <%= node['bind9']['options']['auth_nxdomain'] %>;    # conform to RFC1035
         listen-on-v6 { <%= node['bind9']['options']['listen_on_v6'] %>; };
